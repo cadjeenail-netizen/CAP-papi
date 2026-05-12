@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QCM interactif - La loi d'Ohm U = R × I</title>
+<style>
+:root{
+  --rose:#e51b70;
+  --rose2:#f7d7e7;
+  --violet:#6b3aa8;
+  --gris:#4e4e55;
+  --grisclair:#f3f3f6;
+  --vert:#6f8f2a;
+  --bleu:#1e88c8;
+  --rouge:#d93025;
+  --ok:#1d8f49;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#eef0f6;color:#222;line-height:1.45}
+.page{max-width:1120px;margin:auto;background:white;min-height:100vh;box-shadow:0 0 25px rgba(0,0,0,.15)}
+header{background:linear-gradient(90deg,var(--rose) 0%,var(--rose) 55%,var(--violet) 55%,var(--violet) 100%);color:white;padding:24px 28px;position:relative}
+.badge{display:inline-block;background:var(--gris);padding:8px 22px;border-radius:25px;font-weight:bold;font-size:1.1rem;margin-bottom:10px}
+h1{margin:5px 0 0;font-size:2.1rem;letter-spacing:.5px}.subtitle{font-size:1.05rem;opacity:.95}.cap{position:absolute;right:28px;top:20px;background:var(--violet);padding:16px 28px;border-radius:14px;font-size:2rem;font-weight:bold;box-shadow:0 5px 12px rgba(0,0,0,.25);text-align:center}.cap small{display:block;font-size:.75rem;letter-spacing:2px}
+main{padding:24px 28px 35px}.intro{border-left:8px solid var(--rose);background:var(--rose2);padding:15px 18px;border-radius:8px;margin-bottom:22px}.intro strong{color:var(--rose)}
+.student{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;background:var(--grisclair);padding:14px;border-radius:10px;margin-bottom:20px;border:1px solid #ddd}.field label{font-size:.78rem;font-weight:bold;color:var(--gris);display:block;margin-bottom:4px}.field input{width:100%;padding:9px;border:1px solid #bbb;border-radius:6px;font-size:1rem;background:white}
+.reminder{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}.card{border:2px solid #ddd;border-radius:12px;overflow:hidden;background:white}.card h2{margin:0;background:var(--gris);color:white;padding:10px 14px;font-size:1.05rem}.card .content{padding:13px}.formula{font-size:1.4rem;text-align:center;font-weight:bold;color:var(--rose);background:#faf5f8;border:1px dashed var(--rose);border-radius:8px;padding:12px;margin:8px 0}.schema{font-family:monospace;white-space:pre;background:#f8f8f8;border:1px solid #ddd;border-radius:8px;padding:10px;text-align:center;color:#333;font-size:.9rem}
+.q{border:2px solid #e2e2e2;border-radius:12px;margin:16px 0;background:white;overflow:hidden}.qhead{background:linear-gradient(90deg,var(--rose),#ed6aa2);color:white;padding:11px 14px;font-weight:bold}.qbody{padding:14px}.answers{display:grid;gap:8px;margin-top:10px}.ans{display:flex;gap:10px;align-items:flex-start;border:1px solid #ccc;border-radius:8px;padding:10px;cursor:pointer;background:#fff}.ans:hover{background:#fff2f7;border-color:var(--rose)}.ans input{margin-top:3px}.feedback{margin-top:10px;padding:10px;border-radius:8px;display:none;font-weight:bold}.good{background:#e7f7ee;color:var(--ok);border:1px solid var(--ok)}.bad{background:#fdebea;color:var(--rouge);border:1px solid var(--rouge)}
+.actions{position:sticky;bottom:0;background:white;border-top:4px solid var(--rose);padding:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center}.btn{border:none;border-radius:25px;padding:11px 20px;font-weight:bold;cursor:pointer;color:white;background:var(--rose);font-size:1rem}.btn.secondary{background:var(--gris)}.btn.violet{background:var(--violet)}.score{font-size:1.25rem;font-weight:bold;color:var(--violet);padding:8px 14px;background:var(--rose2);border-radius:25px}
+.resultBox{display:none;margin-top:20px;border:3px solid var(--violet);border-radius:12px;padding:15px;background:#faf7ff}.resultBox h2{margin-top:0;color:var(--violet)}.bar{height:22px;background:#ddd;border-radius:20px;overflow:hidden}.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--rouge),orange,var(--ok));transition:.5s}
+footer{background:var(--gris);color:white;padding:14px 28px;font-size:.9rem}.pink{color:var(--rose);font-weight:bold}.violet{color:var(--violet);font-weight:bold}
+@media(max-width:760px){.cap{position:static;margin-top:12px;display:inline-block}.student,.reminder{grid-template-columns:1fr}h1{font-size:1.55rem}}
+@media print{body{background:white}.page{box-shadow:none}.actions{display:none}.q{break-inside:avoid}.student input{border:none;border-bottom:1px solid #333}.feedback{display:none!important}}
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+  <div class="badge">Les cahiers industriels</div>
+  <h1>QCM interactif - La loi d'Ohm</h1>
+  <div class="subtitle">CAP Électricien - Installations électriques - Savoirs fondamentaux</div>
+  <div class="cap">CAP<br><small>ELEC</small></div>
+</header>
+<main>
+<section class="student">
+  <div class="field"><label>Nom</label><input id="nom" type="text"></div>
+  <div class="field"><label>Prénom</label><input id="prenom" type="text"></div>
+  <div class="field"><label>Classe</label><input id="classe" type="text" value="CAP Électricien"></div>
+  <div class="field"><label>Date</label><input id="date" type="date"></div>
+</section>
+<section class="intro">
+  <strong>Objectif :</strong> vérifier la compréhension de la loi d'Ohm, de la puissance électrique et du lien entre tension, intensité et résistance à partir d'ampoules alimentées en 9 V.
+</section>
+<section class="reminder">
+  <div class="card"><h2>À retenir</h2><div class="content">
+    <div class="formula">U = R × I</div>
+    <p><span class="pink">U</span> : tension en volts (V)<br><span class="pink">R</span> : résistance en ohms (Ω)<br><span class="pink">I</span> : intensité en ampères (A)</p>
+  </div></div>
+  <div class="card"><h2>Puissance</h2><div class="content">
+    <div class="formula">P = U × I</div>
+    <p>Donc : <span class="pink">I = P / U</span>. Plus la résistance est grande, plus le courant est faible.</p>
+  </div></div>
+</section>
+<section class="card"><h2>Schéma simplifié</h2><div class="content"><div class="schema">+ 9 V ──────── Ampoule / Résistance ──────── -
+              Courant I →</div></div></section>
+<form id="quiz"></form>
+<div class="resultBox" id="resultBox"><h2>Résultat</h2><p id="commentaire"></p><div class="bar"><span id="bar"></span></div></div>
+</main>
+<div class="actions">
+  <button class="btn" onclick="corriger()">Corriger le QCM</button>
+  <button class="btn violet" onclick="window.print()">Imprimer / PDF</button>
+  <button class="btn secondary" onclick="resetQuiz()">Recommencer</button>
+  <div class="score" id="score">Score : -- / 20</div>
+</div>
+<footer>CAP Électricien - Fiche 9 : La loi d'Ohm U = R × I - Support pédagogique interactif</footer>
+</div>
+<script>
+const questions=[
+{q:"Comment s'appelle la loi qui relie la tension, la résistance et l'intensité ?",a:["La loi de Joule","La loi d'Ohm","La loi des nœuds"],c:1,e:"La relation U = R × I est la loi d'Ohm."},
+{q:"Dans la formule U = R × I, que représente U ?",a:["La tension en volts","La puissance en watts","La résistance en ohms"],c:0,e:"U représente la tension aux bornes de l'appareil, en volts."},
+{q:"Dans la formule U = R × I, que représente I ?",a:["L'isolement","L'intensité du courant","L'interrupteur"],c:1,e:"I est le courant traversant le récepteur, en ampères."},
+{q:"Dans la formule U = R × I, que représente R ?",a:["La résistance en ohms","Le récepteur en volts","Le rendement en watts"],c:0,e:"R est la résistance de l'appareil, exprimée en ohms (Ω)."},
+{q:"Quelle formule permet de calculer l'intensité à partir de la puissance et de la tension ?",a:["I = P / U","I = U / P","I = P × U"],c:0,e:"Avec P = U × I, on obtient I = P / U."},
+{q:"Une ampoule de 9 V et 2 W absorbe environ quel courant ?",a:["0,22 A","0,44 A","2 A"],c:0,e:"I = 2 / 9 = 0,22 A environ."},
+{q:"Une ampoule de 9 V et 4 W absorbe environ quel courant ?",a:["0,11 A","0,22 A","0,44 A"],c:2,e:"I = 4 / 9 = 0,44 A environ."},
+{q:"Pour une ampoule 9 V avec I = 0,22 A, quelle est la résistance ?",a:["20,45 Ω","40,9 Ω","90 Ω"],c:1,e:"R = U / I = 9 / 0,22 = 40,9 Ω environ."},
+{q:"Pour une ampoule 9 V avec I = 0,44 A, quelle est la résistance ?",a:["20,45 Ω","40,9 Ω","90 Ω"],c:0,e:"R = 9 / 0,44 = 20,45 Ω environ."},
+{q:"Si la résistance d'un appareil augmente, que devient le courant ?",a:["Il augmente toujours","Il devient plus faible","Il disparaît forcément"],c:1,e:"Plus la résistance est élevée, plus elle s'oppose au passage du courant."},
+{q:"Quelle unité utilise-t-on pour la résistance ?",a:["Volt (V)","Ampère (A)","Ohm (Ω)"],c:2,e:"La résistance s'exprime en ohms, symbole Ω."},
+{q:"Calculer la résistance d'une ampoule 9 V absorbant 0,1 A.",a:["9 Ω","90 Ω","0,9 Ω"],c:1,e:"R = U / I = 9 / 0,1 = 90 Ω."},
+{q:"Quelle ampoule a la plus grande résistance ?",a:["Ampoule 9 V - 2 W","Ampoule 9 V - 4 W","Elles ont la même résistance"],c:0,e:"L'ampoule 2 W a R ≈ 40,9 Ω, donc plus grande que 20,45 Ω."},
+{q:"Quelle ampoule laisse passer le courant le plus fort ?",a:["Ampoule 9 V - 2 W","Ampoule 9 V - 4 W","Aucune"],c:1,e:"L'ampoule 4 W absorbe 0,44 A, soit plus que 0,22 A."},
+{q:"Quelle relation donne la puissance électrique ?",a:["P = U × I","P = R / I","P = U + I"],c:0,e:"La puissance se calcule avec P = U × I."},
+{q:"À tension identique, une puissance plus grande correspond généralement à :",a:["Un courant plus grand","Un courant plus petit","Une tension nulle"],c:0,e:"À U identique, si P augmente alors I augmente."},
+{q:"Le symbole Ω correspond à quelle lettre grecque ?",a:["Alpha","Oméga","Delta"],c:1,e:"Ω est la lettre grecque Oméga."},
+{q:"Quelle grandeur s'exprime en ampères ?",a:["La tension","L'intensité","La résistance"],c:1,e:"L'intensité du courant s'exprime en ampères."},
+{q:"Si U = 48 V et R = 24 Ω, alors I vaut :",a:["2 A","24 A","72 A"],c:0,e:"I = U / R = 48 / 24 = 2 A."},
+{q:"Dans un circuit simple, l'ampoule peut être remplacée dans le calcul par :",a:["Une résistance R","Un voltmètre seul","Une pile supplémentaire"],c:0,e:"Pour appliquer la loi d'Ohm, on modélise l'ampoule par une résistance."}
+];
+const quiz=document.getElementById('quiz');
+questions.forEach((it,i)=>{
+ const div=document.createElement('div');div.className='q';
+ div.innerHTML=`<div class="qhead">Question ${i+1}</div><div class="qbody"><strong>${it.q}</strong><div class="answers">${it.a.map((x,j)=>`<label class="ans"><input type="radio" name="q${i}" value="${j}"><span>${x}</span></label>`).join('')}</div><div class="feedback" id="f${i}"></div></div>`;
+ quiz.appendChild(div);
+});
+function corriger(){
+ let pts=0;
+ questions.forEach((it,i)=>{
+   const choix=document.querySelector(`input[name=q${i}]:checked`);
+   const f=document.getElementById('f'+i);f.style.display='block';
+   if(choix && Number(choix.value)===it.c){pts++;f.className='feedback good';f.textContent='✓ Bonne réponse. '+it.e;}
+   else{f.className='feedback bad';f.textContent='✗ Réponse attendue : '+it.a[it.c]+'. '+it.e;}
+ });
+ const note=Math.round((pts/questions.length*20)*2)/2;
+ document.getElementById('score').textContent=`Score : ${note} / 20`;
+ const pct=Math.round(pts/questions.length*100);
+ const box=document.getElementById('resultBox');box.style.display='block';document.getElementById('bar').style.width=pct+'%';
+ let app=pct>=80?'Très bien : compétences bien maîtrisées.':pct>=60?'Correct : les bases sont présentes, quelques points à revoir.':pct>=40?'Fragile : revoir les formules et les unités.':'Insuffisant : reprendre la leçon avec les exemples.';
+ document.getElementById('commentaire').innerHTML=`Réussite : <strong>${pct}%</strong> - ${app}`;
+ box.scrollIntoView({behavior:'smooth'});
+}
+function resetQuiz(){document.querySelectorAll('input[type=radio]').forEach(e=>e.checked=false);document.querySelectorAll('.feedback').forEach(e=>e.style.display='none');document.getElementById('score').textContent='Score : -- / 20';document.getElementById('resultBox').style.display='none';document.getElementById('bar').style.width='0';}
+document.getElementById('date').valueAsDate=new Date();
+</script>
+</body>
+</html>
